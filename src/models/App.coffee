@@ -2,8 +2,8 @@
 # of containing the game logic directly.
 class window.App extends Backbone.Model
   initialize: ->
+    # debugger;
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
-
 

@@ -4,27 +4,35 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: () ->
-#adds card to player's hand and takes out of deck
     @add(@deck.pop())
     console.log(@.scores()[0])
 
-    if @checkScore(@.scores()[0])
+    if @.scores()[0] > 21
       alert('lose!')
+
     else if @.scores()[0] == 21
       alert('win')
 
+  call: false
+
   stand: (playerScore) ->
-    @.models[0].attributes.revealed = true
+    if @call == false
+      @.models[0].flip()
+      @call = true
+
     if @.scores()[0] < 17
+      console.log(@.scores()[0])
       @add(@deck.pop())
-      #@stand(arguments[0])
+      @stand(playerScore)
       #trying to call the stand function again in order
       #for the dealer to play automaticly instead of
       #only plays when we hit the stand botton
     else if @.scores()[0] > 21
+      console.log('greater than 21')
       alert('Win')
-    else if
-      @compareScore(playerScore, @.scores())
+    else
+      console.log('compare score')
+      @compareScore(playerScore, @.scores()[0])
 
 #dealer begins to play
 #new function that checks dealer's score
@@ -33,19 +41,21 @@ class window.Hand extends Backbone.Collection
   #if dealer's score is less than 21 and higher than
     #player, dealer wins
 
-  checkScore: (score) ->
-    if score > 21
-      return true
-    else
-      return false
-    #check if greater than 21 or not.
-      #if greater than 21, false
-      #if less than 21, true
+  # checkScore: (score) ->
+  #   if score > 21
+  #     return true
+  #   else
+  #     return false
+  #   #check if greater than 21 or not.
+  #     #if greater than 21, false
+  #     #if less than 21, true
 
   compareScore: (playerScore, dealerScore) ->
     if playerScore > dealerScore
+      console.log('player>dealer')
       alert("win!")
     else if playerScore == dealerScore
+      console.log('tie')
       alert('tie!')
     else
       alert ('lose!')
