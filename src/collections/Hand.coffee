@@ -17,9 +17,13 @@ class window.Hand extends Backbone.Collection
     @.models[0].attributes.revealed = true
     if @.scores()[0] < 17
       @add(@deck.pop())
-    else if @checkScore(@.scores()[0])
+      #@stand(arguments[0])
+      #trying to call the stand function again in order
+      #for the dealer to play automaticly instead of
+      #only plays when we hit the stand botton
+    else if @.scores()[0] > 21
       alert('Win')
-    else
+    else if
       @compareScore(playerScore, @.scores())
 
 #dealer begins to play
